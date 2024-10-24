@@ -26,7 +26,7 @@ public class SegementGenerator : MonoBehaviour
         segmentNum = Random.Range(0, 4);
         Instantiate(segment[segmentNum], new Vector3(0, 0, zPos), Quaternion.identity);
         zPos += 30;
-        yield return new WaitForSeconds(3);
+        yield return new WaitForSeconds(1);
         creatingSegment = false;
     }
 
