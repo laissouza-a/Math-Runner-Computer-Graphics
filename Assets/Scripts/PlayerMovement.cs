@@ -5,7 +5,8 @@ using UnityEngine;
 public class PlayerMovement : MonoBehaviour
 {
     //Movimento em frente e lado a lado
-    public float playerSpeed = 5;
+    public float playerSpeed = 6.9f;
+    public float speedIncreaseRate = 0.067f;
     public float horizontalSpeed = 3;
     public float rightLimit = 5.5f;
     public float leftLimit = -5.5f;
@@ -14,7 +15,14 @@ public class PlayerMovement : MonoBehaviour
     void Update()
     {
         //Transformação:
+        if(playerSpeed < 25.0f)
+        {
+            horizontalSpeed += speedIncreaseRate * Time.deltaTime;
+            playerSpeed += speedIncreaseRate * Time.deltaTime;
+        }
         transform.Translate(Vector3.forward * Time.deltaTime * playerSpeed, Space.World);
+        
+        //playerSpeed *= playerSpeed*0.05
         if(canMove == true){
         //Interação Teclado:
         if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow))
