@@ -12,8 +12,12 @@ public class PlayerMovement : MonoBehaviour
     public float leftLimit = -5.5f;
     static public bool canMove = false;
 
+
+    //pular
     public bool isJumping = false;
     public bool comingDown = false;
+
+//referenciar player
     public GameObject playerObject;
 
 
@@ -63,37 +67,28 @@ public class PlayerMovement : MonoBehaviour
                 if(isJumping == false){
                     isJumping = true;
                     playerObject.GetComponent<Animator>().Play("Jump");
-                    
+                    StartCoroutine(JumpSequence());
                 }
             }
         }
         if(isJumping == true){
             if(comingDown == false){
-                transform.Translate(Vector3.up * Time.deltaTime * 3, Space.World)
+                transform.Translate(Vector3.up * Time.deltaTime * 5, Space.World);
             }
             if(comingDown == true){
-                transform.Translate(Vector3.up * Time.deltaTime * -3, Space.World)
+                transform.Translate(Vector3.up * Time.deltaTime * -5, Space.World);
             }
         }
-    }
 
-    // Verifica se o jogador está tocando o chão
-    private void OnCollisionEnter(Collision collision)
-    {
-        if (collision.gameObject.CompareTag("Ground"))
-        {
-            isGrounded = true;
-        }
     }
-
 
     IEnumerator JumpSequence(){
-        yield return WaitForSeconds(0.45f);
-        comingDown = true;
-        yield return WaitForSeconds(0.45f);
-        isJumping = false;
+        yield return new WaitForSeconds(0.45f);  
+        comingDown=true;
+        yield return new WaitForSeconds(0.45f);
+        isJumping=false;
         comingDown = false;
-        playerObject.GetComponent<Animator>().Play("Standard Run");
-
-    }
+        playerObject.GetComponent<Animator>().Play("Running");
+    
+      }
 }
