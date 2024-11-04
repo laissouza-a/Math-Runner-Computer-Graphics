@@ -353,6 +353,7 @@
 "Assets/Scripts/EndRunSequence.cs"
 "Assets/Scripts/LevelDistance.cs"
 "Assets/Scripts/LevelStarter.cs"
+"Assets/Scripts/MainMenuFunction.cs"
 "Assets/Scripts/MathCollision.cs"
 "Assets/Scripts/ObstacleCollision.cs"
 "Assets/Scripts/OnTriggerWall.cs"
