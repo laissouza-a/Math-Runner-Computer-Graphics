@@ -5540,9 +5540,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerSpeed: 5
+  speedIncreaseRate: 0.067
   horizontalSpeed: 3
   rightLimit: 5.5
   leftLimit: -5.5
+  isJumping: 0
+  comingDown: 0
+  playerObject: {fileID: 1524987503}
+  jumpForce: 7
+  isGrounded: 1
 --- !u!143 &772979737
 CharacterController:
   m_ObjectHideFlags: 0
