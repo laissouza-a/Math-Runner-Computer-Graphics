@@ -10,9 +10,12 @@ public class CollectableControl : MonoBehaviour
     public GameObject coinCountDisplay;
     public GameObject coinEndDisplay;
 
+
        void Update()
     {
         coinCountDisplay.GetComponent<Text>().text = ""+coinCount;
+        coinEndDisplay.GetComponent<Text>().text = ""+coinCount;
+
 
     }
 }

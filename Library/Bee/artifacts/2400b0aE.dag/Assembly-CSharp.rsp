@@ -350,6 +350,7 @@
 "Assets/Scripts/CollectCoin.cs"
 "Assets/Scripts/CollectableControl.cs"
 "Assets/Scripts/CollectableRotate.cs"
+"Assets/Scripts/EndRunSequence.cs"
 "Assets/Scripts/LevelDistance.cs"
 "Assets/Scripts/LevelStarter.cs"
 "Assets/Scripts/MathCollision.cs"

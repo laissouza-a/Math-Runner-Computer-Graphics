@@ -69,6 +69,7 @@
     <Compile Include="Assets/Scripts/LevelDistance.cs" />
     <Compile Include="Assets/Scripts/CollectableRotate.cs" />
     <Compile Include="Assets/Scripts/LevelStarter.cs" />
+    <Compile Include="Assets/Scripts/EndRunSequence.cs" />
     <Compile Include="Assets/Scripts/MathCollision.cs" />
     <Compile Include="Assets/Scripts/CollectCoin.cs" />
     <Compile Include="Assets/Scripts/ObstacleCollision.cs" />
