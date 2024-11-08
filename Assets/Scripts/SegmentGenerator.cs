@@ -6,7 +6,7 @@ public class SegementGenerator : MonoBehaviour
 {
     //Tem 3 segmentos alem do start e start countdown, eles vão ser postos aleatoriamente na frente do outro:
     public GameObject[] segment;
-    [SerializeField] int zPos = 30;
+    [SerializeField] int zPos = 38;
     [SerializeField] bool creatingSegment = false;
     [SerializeField] int segmentNum;
 
@@ -25,7 +25,7 @@ public class SegementGenerator : MonoBehaviour
     {
         segmentNum = Random.Range(0, 4);
         Instantiate(segment[segmentNum], new Vector3(0, 0, zPos), Quaternion.identity);
-        zPos += 30;
+        zPos += 40;
         yield return new WaitForSeconds(1);
         creatingSegment = false;
     }

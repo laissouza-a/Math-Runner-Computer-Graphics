@@ -4,72 +4,91 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
+    // Movimentação em frente e lado a lado
     public float playerSpeed = 6.9f;
     public float speedIncreaseRate = 0.067f;
     public float horizontalSpeed = 3;
+    public float rightLimit = 5.5f;
+    public float leftLimit = -5.5f;
     static public bool canMove = false;
 
-    public float jumpForce = 5f; // Força de salto
-    private float forcaY; // Força aplicada no eixo Y para gravidade e salto
 
-    private CharacterController controller; // Controlador do personagem
-    private Animator animator; // Controlador de animações
+    //pular
+    public bool isJumping = false;
+    public bool comingDown = false;
 
-    [SerializeField] private Transform peDoPersonagem; // Ponto de checagem no pé do personagem
-    [SerializeField] private LayerMask colisaoLayer; // Layer para detectar colisões com o chão
-    private bool isGrounded; // Variável para verificar se o personagem está no chão
+//referenciar player
+    public GameObject playerObject;
 
+
+
+    // Parâmetros de pulo
+    public float jumpForce = 7.0f;
+    public bool isGrounded = true; 
+    private Rigidbody rb;
+
+    // Inicialização
     void Start()
     {
-        controller = GetComponent<CharacterController>();
-        animator = GetComponent<Animator>();
+        rb = GetComponent<Rigidbody>(); 
     }
 
     void Update()
     {
         // Aumentar gradualmente a velocidade do jogador
-        if (playerSpeed < 25.0f)
+        if(playerSpeed < 25.0f)
         {
             horizontalSpeed += speedIncreaseRate * Time.deltaTime;
             playerSpeed += speedIncreaseRate * Time.deltaTime;
         }
-
-        // Movimento para frente constante
-        controller.Move(Vector3.forward * Time.deltaTime * playerSpeed);
-
-        if (canMove)
+        transform.Translate(Vector3.forward * Time.deltaTime * playerSpeed, Space.World);
+        
+        if(canMove)
         {
             // Movimentação lateral
-            Vector3 lateralMove = Vector3.zero;
             if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow))
             {
-                lateralMove = Vector3.left * horizontalSpeed * Time.deltaTime;
+                if (transform.position.x > leftLimit)
+                {
+                    transform.Translate(Vector3.left * Time.deltaTime * horizontalSpeed);
+                }
             }
-            else if (Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow))
+            if (Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow))
             {
-                lateralMove = Vector3.right * horizontalSpeed * Time.deltaTime;
+                if (transform.position.x < rightLimit)
+                {
+                    transform.Translate(Vector3.right * Time.deltaTime * horizontalSpeed);
+                }
             }
-            controller.Move(lateralMove);
 
-            // Verifica se o personagem está no chão
-            isGrounded = Physics.CheckSphere(peDoPersonagem.position, 0.3f, colisaoLayer);
-            animator.SetBool("noChao", isGrounded);
-
-            // Aplicação da força de salto
-            if (Input.GetKeyDown(KeyCode.Space) && isGrounded)
+            // Pular, só pula se estiver no chão
+            if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.UpArrow) ||  Input.GetKey(KeyCode.Space))
             {
-                forcaY = jumpForce;
-                animator.SetTrigger("saltar");
+                if(isJumping == false){
+                    isJumping = true;
+                    playerObject.GetComponent<Animator>().Play("Jump");
+                    StartCoroutine(JumpSequence());
+                }
             }
-
-            // Aplicação da gravidade
-            if (forcaY > -9.81f)
-            {
-                forcaY += -9.81f * Time.deltaTime;
-            }
-
-            // Move o personagem no eixo Y (gravidade e salto)
-            controller.Move(new Vector3(0, forcaY, 0) * Time.deltaTime);
         }
+        if(isJumping == true){
+            if(comingDown == false){
+                transform.Translate(Vector3.up * Time.deltaTime * 5, Space.World);
+            }
+            if(comingDown == true){
+                transform.Translate(Vector3.up * Time.deltaTime * -5, Space.World);
+            }
+        }
+
     }
+
+    IEnumerator JumpSequence(){
+        yield return new WaitForSeconds(0.45f);  
+        comingDown=true;
+        yield return new WaitForSeconds(0.45f);
+        isJumping=false;
+        comingDown = false;
+        playerObject.GetComponent<Animator>().Play("Running");
+    
+      }
 }

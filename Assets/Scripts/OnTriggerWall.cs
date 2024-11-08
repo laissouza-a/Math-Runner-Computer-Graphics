@@ -8,6 +8,7 @@ public class OnTriggerWall : MonoBehaviour
     public GameObject player;
     public GameObject charModel;
 
+    public GameObject levelControl;
     public GameObject mathCollisionObject; // GameObject que contém o script MathCollision
     private MathCollision mathCollision;
 
@@ -68,5 +69,9 @@ public class OnTriggerWall : MonoBehaviour
         this.gameObject.GetComponent<BoxCollider>().enabled = false;
         player.GetComponent<PlayerMovement>().enabled = false;
         charModel.GetComponent<Animator>().Play("Stumble Backwards");
+        levelControl.GetComponent<LevelDistance>().enabled = false;
+        levelControl.GetComponent<EndRunSequence>().enabled = true;
+
+
     }
 }
